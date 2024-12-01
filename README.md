@@ -1,36 +1,44 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Learning Sprint Framework
 
-## Getting Started
+A framework for structuring 2-week learning sprints with daily shipping goals.
 
-First, run the development server:
+## Core Concepts & Terminology
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Learning Sprint
+The primary unit of learning in our system. A Learning Sprint:
+- Is a 2-week focused period for learning a specific topic
+- Has a clear title describing what you want to learn
+- Requires shipping something tangible every day
+- Has a defined start and end date
+- Can be in one of three states: planning, in_progress, or completed
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Daily Ship
+A tangible output that demonstrates what you learned that day. This could be:
+- Code you wrote
+- Blog post you created
+- Project you built
+- Documentation you wrote
+- Video you recorded
+- Any other concrete evidence of learning
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Status
+A Learning Sprint can be in one of these states:
+- `planning`: Sprint is created but hasn't started yet
+- `in_progress`: Sprint is currently active
+- `completed`: Sprint has ended
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Terminology Mapping
+To maintain consistency throughout the codebase and UI:
+- Use "Learning Sprint" or "Sprint" (not "Project" or "Path")
+- Use "Daily Ship" (not "Deliverable" or "Output")
+- Use "Create Sprint" (not "Start Project" or "Begin Learning")
 
-## Learn More
+## File Structure
+- `/web` - Frontend Next.js application
+- `/api` - Backend API server
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Tech Stack
+- Frontend: Next.js 13+ with App Router
+- UI: shadcn/ui components with Tailwind CSS
+- Backend: Node.js with Fastify
+- Database: PostgreSQL with Prisma 
