@@ -28,7 +28,11 @@ interface Project {
     timeOfDay: string[]
     effectiveness: string
     reflection: string | null
-  }>
+  }>;
+  learningPlan: Array<{
+    day: number;
+    today: { timeCommitment: number; suggestedFocus?: string };
+  }>;
 }
 
 interface ProjectDetailsProps {
@@ -200,8 +204,19 @@ export function ProjectDetails({ project, userId }: ProjectDetailsProps) {
           </Card>
         </div>
 
-        {/* Progress History */}
+        {/* Learning Plan and Progress */}
         <div className="space-y-4">
+          <Card className="p-4">
+            <h2 className="text-xl font-semibold mb-2">Two-Week Plan</h2>
+            <ul className="space-y-1 text-sm">
+              {project.learningPlan.map((item) => (
+                <li key={item.day}>
+                  Day {item.day}: {item.today.suggestedFocus || `${item.today.timeCommitment}h focus`}
+                </li>
+              ))}
+            </ul>
+          </Card>
+
           <h2 className="text-xl font-semibold">Recent Progress</h2>
           {project.dailyProgress?.slice(0, 5).map((progress, i) => (
             <Card key={i} className="p-4">
