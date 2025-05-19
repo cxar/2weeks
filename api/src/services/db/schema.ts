@@ -25,6 +25,7 @@ export const sprints = pgTable('sprints', {
   goalDescription: text('goal_description').notNull(),
   startDate: timestamp('start_date').notNull(),
   endDate: timestamp('end_date').notNull(),
+  learningPlan: jsonb('learning_plan').$type<any>().default(sql`'[]'::jsonb`).notNull(),
   status: sprintStatusEnum('status').notNull().default('active'),
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull()

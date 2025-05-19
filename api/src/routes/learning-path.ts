@@ -5,13 +5,15 @@ import { db } from '../services/db'
 import { sprints, dailyProgress, sprintStats } from '../services/db/schema'
 import { and, eq, desc } from 'drizzle-orm'
 import { generateSprintSlug } from '../services/llm/utils'
+import { generateInitialPlan } from '../services/scheduling/allocation'
 import { clerkMiddleware, getAuth } from '@hono/clerk-auth'
 
 const CreateSprintSchema = z.object({
   title: z.string().min(1),
   startDate: z.string(),
   endDate: z.string(),
-  goalDescription: z.string().min(1)
+  goalDescription: z.string().min(1),
+  timePerDay: z.number().min(0.5).max(24).optional()
 })
 
 const app = new Hono()
@@ -28,6 +30,16 @@ app.post('/', async (c) => {
     }
 
     const body = CreateSprintSchema.parse(await c.req.json())
+    const timePerDay = body.timePerDay ?? 2
+
+    const plan = generateInitialPlan({
+      title: body.title,
+      goalDescription: body.goalDescription,
+      finalDeliverable: body.goalDescription,
+      startDate: new Date(body.startDate),
+      endDate: new Date(body.endDate),
+      timePerDay
+    })
 
     // Create sprint
     const [sprint] = await db
@@ -38,7 +50,8 @@ app.post('/', async (c) => {
         goalDescription: body.goalDescription,
         startDate: new Date(body.startDate),
         endDate: new Date(body.endDate),
-        slug: generateSprintSlug()
+        slug: generateSprintSlug(),
+        learningPlan: plan
       })
       .returning()
 
@@ -103,7 +116,8 @@ app.get('/:slug', async (c) => {
         currentStreak: sprint.stats?.currentStreak ?? 0,
         longestStreak: sprint.stats?.longestStreak ?? 0,
         lastProgressDate: sprint.stats?.lastProgressDate ?? null
-      }
+      },
+      learningPlan: sprint.learningPlan
     }
 
     return c.json({ success: true, sprint: response })
@@ -141,7 +155,8 @@ app.get('/', async (c) => {
         currentStreak: sprint.stats?.currentStreak ?? 0,
         longestStreak: sprint.stats?.longestStreak ?? 0,
         lastProgressDate: sprint.stats?.lastProgressDate ?? null
-      }
+      },
+      learningPlan: sprint.learningPlan
     }))
 
     return c.json({ success: true, sprints: response })

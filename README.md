@@ -1,6 +1,7 @@
 # Learning Sprint Framework
 
 A framework for structuring 2-week learning sprints with daily progress tracking.
+When creating a sprint the API now auto-generates a simple two-week plan so you know what to focus on each day.
 
 ## Core Concepts
 

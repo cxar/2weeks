@@ -44,7 +44,8 @@ export function CreateModal({ userId }: CreateModalProps) {
           title,
           goalDescription,
           startDate: startDate.toISOString(),
-          endDate: endDate.toISOString()
+          endDate: endDate.toISOString(),
+          timePerDay: 2
         })
       })
 

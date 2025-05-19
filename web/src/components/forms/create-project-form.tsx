@@ -38,7 +38,8 @@ export function CreateProjectForm({ userId, onSuccess, onCancel }: CreateProject
           title,
           goalDescription,
           startDate: startDate.toISOString(),
-          endDate: endDate.toISOString()
+          endDate: endDate.toISOString(),
+          timePerDay: 2
         })
       })
 
